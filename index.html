@@ -185,13 +185,21 @@
       // 🌟 HINT: remember about the `slice` method which strings and arrays have
       // ❗ Feel free to implement `back`, although this is not required nor graded
       constructor(str, num) {
-        this.str = str
-        this.num = num
+        this.text = str
+        this.chars = num
+        this.page = 0
       }
       next() {
-        let result = []
-      }
+        const start = this.page * this.chars;
+        const end = start + this.chars;
+        this.page++;
 
+        if (start < this.text.length) {
+          return this.text.slice(start, end)
+        }
+        return null
+        // this.page = 0
+      }
     }
 
 
@@ -227,23 +235,41 @@
       //      console.log(list) // prints ["a"]
       // 👉 HINT: if you are not feeling confident with map and filter, solve the problem with for loops,
       //      and with the piece of mind of all tests passing, refactor to use map/filter
-      constructor(...antNames) {
-        this.ants = antNames.map((name) => ({ name, health: 100 }));
+      constructor(...names) {
+        this.ants = names.map((name) => ({ name, health: 100 }));
       }
-      work() {
- this.ants = this.ants.map((ant) => {
-          ant.health -= 20;
-          return ant;
-        })
-        .filter((ant) => ant.health > 0);
-      }
-      feed(antname) {
-        let huh = this.ants.filter((ant) => {
-          if (ant.name === antname) { return true }
 
-        })
+      work() {
+        if (this.ants.length === 0) {
+          return "No ants here. Did you work them to death?";
+        }
+        let antcount = this.ants.length;
+        this.ants = this.ants.map((ant) => {
+          ant.health -= 20;
+          if (ant.health <= 0) {
+            return null;
+          }
+          return ant;
+        }).filter(Boolean);
+
+        return `${antcount} ants starting work!`;
+      }
+
+      feed(name) {
+        let antFed = this.ants.filter((ant) => ant.name === name);
+        if (antFed.length === 0) {
+          return `${name} not found!`;
+        }
+
+        else {
+          antFed.forEach((ant => {
+            ant.health += 15
+          }));
+          return "Yum!";
+        }
       }
     }
+
 
 
 
