@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8" />
   <title>Web Sprint 3 Challenge</title>
   <style>
     * {
@@ -18,7 +19,6 @@
     .widget p {
       font-style: italic;
     }
-
   </style>
 </head>
 
@@ -45,7 +45,7 @@
     // ❗ Debug properly using the Console
 
     // 👉 CHALLENGE 1 - Integers
-    
+
     class Integers {
       // 🧠 Constructor takes **any** number of arguments, which are integers
       // 🧠 Instances have an `ints` property which is an array holding the integers above in the same order
@@ -59,55 +59,62 @@
       // 🧠 Implement a `getAllReversed` method which returns the ints in reverse order
       // ❗ WARNING: except for `getAllReversed`, methods must respect the order of the integers
       // ❗ WARNING: note that none of the methods actually mutate the `ints` property
-      constructor (...any){
+      constructor(...any) {
         this.ints = any
       }
-        getAll() {
-          return this.ints
-        }
-        getEvens() {
-          let result = []
-          for (let i of this.ints){
-            if (i % 2 === 0){result.push(i)}
-            
-            
-          }return result
+      getAll() {
+        return this.ints
+      }
+      getEvens() {
+        let result = []
+        for (let i of this.ints) {
+          if (i % 2 === 0) { result.push(i) }
+
+
+        } return result
+      }
+      getNegatives() {
+        let result = []
+        for (let i of this.ints) {
+          if (i < 0) {
+            result.push(i)
           }
-          getNegatives() {
-            let result = []
-            for (let i of this.ints){
-              if (i < 0){
-                result.push(i)
-              }
-            } return result
-          }
-          getAllSquared(){
-            return this.ints.map((nums) => nums ** 2)
-          }
-          pop(){
-          return this.ints.pop()
-        }
-        push(int){
+        } return result
+      }
+      getAllSquared() {
+        return this.ints.map((nums) => nums ** 2)
+      }
+      pop() {
+        return this.ints.pop()
+      }
+      push(int) {
         this.ints.push(int)
         return this.ints
-        }
-        getEveryNth(arr, nth){
-          const result = [];
-for (let i = 0; i < arr.length; i += nth) {
-  result.push(arr[i]);
-}return result;
+      }
+      getEveryNth(nth) {
+        let result = []
+        for (let i = 0; i < this.ints.length; i += nth) {
+          result.push(this.ints[i])
+        } return result;
+      };
+      getAllReversed() {
+        let result = []
+        for (let i = this.ints.length - 1; i >= 0; i--) {
+          result.push(this.ints[i])
+        } return result;
+      }
 
 
-} 
-        }
-        
-        
-          
-         
-  
-                 
-          
-        
+    }
+
+
+
+
+
+
+
+
+
 
     // 👉 CHALLENGE 2 NerfGun
     class NerfGun {
@@ -124,6 +131,40 @@ for (let i = 0; i < arr.length; i += nth) {
       //      * When engaging the safety, return "Safety enabled!"
       //      * When disengaging the safety, return "Safety disabled!"
       // 🌟 HINT: instances need to keep track of their maximum capacity as well as their current capacity
+      constructor(ammo) {
+        this.max = ammo
+        this.ammunition = ammo
+        this.safety = 'on'
+      }
+      shoot() {
+
+        if (this.ammunition === 0) { return 'Click!' }
+        if ((this.ammunition >= 1) && this.safety === 'off') {
+          this.ammunition--
+          return 'Bang!'
+          if (this.ammunition === 0) { return 'Click!' }
+
+        } if ((this.ammunition === 0) || (this.safety === 'on')) {
+          return 'Click!'
+        }
+      }
+      toggleSafety() {
+        if (this.safety === 'on') {
+          this.safety = 'off'
+          return 'Safety disabled!'
+        } else if (this.safety === 'off') {
+          this.safety = 'on'
+          return 'Safety enabled!'
+        }
+      }
+      reload(num) {
+        if ((typeof num !== 'number' || num <= 0)) { return 'Error reloading!' }
+        this.ammunition = num + this.ammunition
+        if (this.ammunition > this.max) { this.ammunition = this.max }
+        return `${this.ammunition} projectiles left!`
+
+      }
+
 
     }
 
@@ -143,8 +184,16 @@ for (let i = 0; i < arr.length; i += nth) {
       //    ebook.next() // returns null
       // 🌟 HINT: remember about the `slice` method which strings and arrays have
       // ❗ Feel free to implement `back`, although this is not required nor graded
+      constructor(str, num) {
+        this.str = str
+        this.num = num
+      }
+      next() {
+        let result = []
+      }
 
     }
+
 
     // 👉 CHALLENGE 4 AntFarm
     class AntFarm {
@@ -178,8 +227,25 @@ for (let i = 0; i < arr.length; i += nth) {
       //      console.log(list) // prints ["a"]
       // 👉 HINT: if you are not feeling confident with map and filter, solve the problem with for loops,
       //      and with the piece of mind of all tests passing, refactor to use map/filter
+      constructor(...antNames) {
+        this.ants = antNames.map((name) => ({ name, health: 100 }));
+      }
+      work() {
+ this.ants = this.ants.map((ant) => {
+          ant.health -= 20;
+          return ant;
+        })
+        .filter((ant) => ant.health > 0);
+      }
+      feed(antname) {
+        let huh = this.ants.filter((ant) => {
+          if (ant.name === antname) { return true }
 
+        })
+      }
     }
+
+
 
     // 🧪 TESTS, do not make any changes below this line ===================
     // 🧪 TESTS, do not make any changes below this line ===================
